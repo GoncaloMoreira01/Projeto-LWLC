@@ -1,0 +1,48 @@
+.d-none{
+    display:none;
+}
+
+body{
+    font-size: 100px;    
+    background-image:url(fotos/fundo1.png);
+    height: 100%; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    background-size: cover;
+    
+    
+}
+
+.texto{
+    text-align: center;
+}
+
+
+button#btn_comecar{
+    margin-left: 47%;
+    box-shadow:inset 0px -50px 0px 0px #5abaf5;
+	background:linear-gradient(to bottom, #757575 5%, #8a8a8a 100%);
+	background-color:#757575;
+	border-radius:20px;
+	display:inline-block;
+	cursor:pointer;
+	color:#1f262e;
+	font-family:Arial;
+	font-size:18px;
+	font-weight:bold;
+	padding:9px 33px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #0080ff;
+}
+
+button#btn_comecar {
+	background:linear-gradient(to bottom, #8a8a8a 5%, #757575 100%);
+	background-color:#8a8a8a;
+}
+
+button#btn_comecar {
+    position:relative;
+	top:1px;
+}
+
+

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Projeto LWLC</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+
+<body>
+
+    <div class="texto"> 
+        <h1>Projeto LWLC</h1> 
+        <h2>Center test</h2>
+    </div>
+
+    <div>
+        <button type="button" id="btn_comecar" class="d-none">Começar o Teste</button>
+    </div>
+
+    
+
+</body>
+
+<script>
+
+    var btn_comecar = document.getElementById("btn_comecar");
+
+    btn_comecar.addEventListener('click', function(){
+     comecar_teste()
+       
+    });
+
+    function comecar_teste(){
+        btn_comecar.classList.add('d-none');
+        
+    }
+
+</script>
+
+</html>
