@@ -3,28 +3,72 @@
 }
 
 body{
-    font-size: 100px;    
-    background-image:url(fotos/fundo1.png);
-    height: 100%; 
-    background-position: center; 
+        
+	background-image:url(fotos/fundo1.png);
+    height: 100%;  
+   /* background-position: center; */
     background-repeat: no-repeat; 
     background-size: cover;
     
     
 }
 
-.texto{
-    text-align: center;
+.texto{ /* titulo pagina inicial */
+	text-align: left;
+	font-size: 50px;
+}
+
+.texto2{ /* pequeno texto pagina incial */
+	font-size: 21px;
+}
+
+#terminar_teste{  /*presente ao clicar no botao temrinar teste */
+	color: blanchedalmond;
+	font-size: 30px;
+	text-align: center;
+}
+
+#acertou_teste{   /*presente ao clicar no botao temrinar teste */
+	color: blanchedalmond;
+	font-size: 30px;
+	text-align: center;
+}
+
+#errou_teste{    /*presente ao clicar no botao temrinar teste */
+	color: blanchedalmond;
+	font-size: 20px;
+	text-align: center;
+}
+
+#naorespondeu_teste{   /*presente ao clicar no botao temrinar teste */
+	color: blanchedalmond;
+	font-size: 20px;
+	text-align: center;
+}
+
+#resultado_final{    /*presente ao clicar no botao temrinar teste */
+	color: blanchedalmond;
+	font-size: 20px;
+	text-align: center;
+}
+
+#teste{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 40px;
+	color: blanchedalmond;
+	text-align: center;
+	margin-top: 300px;
 }
 
 
+
 button#btn_comecar{
-    margin-left: 47%;
+	margin-left: 880px;
+	margin-top: 250px;
     box-shadow:inset 0px -50px 0px 0px #5abaf5;
 	background:linear-gradient(to bottom, #757575 5%, #8a8a8a 100%);
 	background-color:#757575;
 	border-radius:20px;
-	display:inline-block;
 	cursor:pointer;
 	color:#1f262e;
 	font-family:Arial;
@@ -45,4 +89,37 @@ button#btn_comecar {
 	top:1px;
 }
 
+.mt-10{ /* tamanho dos botoes*/
+	font-family:Arial;
+	font-size:20px;
+	margin-left:5px;
+}
 
+
+
+.body2{
+	background-image: url(fotos/fundo3.jpg);
+	height: 100%;  
+    background-position: center; 
+    background-repeat: no-repeat; 
+    background-size: cover;
+
+}
+
+.ml-20{ 
+	margin-left: 30px;
+}
+
+.mr-10{
+	margin-right:10px;
+}
+
+.time {
+    font-weight: bold;
+	text-align: right;
+	font-size: 40px;
+	text-align: left;
+	color: beige;
+	
+	
+}

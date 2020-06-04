@@ -5,37 +5,279 @@
     <meta charset="utf-8" />
     <title>Projeto LWLC</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    
 
 </head>
 
 <body>
 
-    <div class="texto"> 
+    <div id="teste2" class="texto"> 
         <h1>Projeto LWLC</h1> 
-        <h2>Center test</h2>
+        <h2>Teste Center</h2>
+       
+    </div>
+
+
+    <div id="teste3" class="texto2">
+        <h5> Clica no botão para começar o teste</h5>
     </div>
 
     <div>
-        <button type="button" id="btn_comecar" class="d-none">Começar o Teste</button>
+        <button type="button" id="btn_comecar">Começar o Teste</button>
+        <button type="button" id="btn_anterior" class="mt-10 d-none">Pergunta Anterior</button>
+        <button type="button" id="btn_seguinte" class="mt-10 d-none">Pergunta Seguinte</button>
+        <button type="button" id="btn_terminar" class="mt-10 d-none">Terminar teste</button>
+    </div>
+    
+    <div id="timer" class=" d-none time"> </div>
+    
+    <div id="teste" class="d-none"></div>
+    
+    <div id="terminar_teste" class="d-none">
+            <h1>O teu teste terminou </h1>
     </div>
 
-    
+    <div id="acertou_teste" class='d-none'>
+        <h2>Perguntas corretas: </h2>
+    </div>
+
+    <div id="errou_teste" class='d-none'>
+        <h2>Perguntas erradas: </h2>
+    </div>
+
+    <div id="naorespondeu_teste" class='d-none'>
+        <h2>Perguntas não respondidas: </h2>
+    </div>
+
+    <div id="resultado_final" class='d-none'>
+        <h2>Resultado final: </h2>
+    </div>
+
 
 </body>
 
+
+
+
 <script>
 
-    var btn_comecar = document.getElementById("btn_comecar");
+    var btnAnterior = document.getElementById("btn_anterior");
 
-    btn_comecar.addEventListener('click', function(){
-     comecar_teste()
-       
+    var btnSeguinte = document.getElementById("btn_seguinte");
+   
+    var btnComecar = document.getElementById("btn_comecar");
+
+    var btnTerminar = document.getElementById("btn_terminar");
+
+    var test_radio = document.getElementById('teste');
+
+    var minute= 2.00;
+    var timer;
+    var endTime;
+
+    const perguntas = [
+        '{"id": 1, "pergunta": "Quanto é 1+1?", "escolhas": ["1", "2", "3", "4"],"resposta": "2" }',
+        '{"id": 2, "pergunta": "Quanto é 2+1?", "escolhas": ["1", "2", "3", "4"],"resposta": "3" }',
+        '{"id": 3, "pergunta": "Quanto é 3+1?", "escolhas": ["1", "2", "3", "4"],"resposta": "4" }',
+        '{"id": 4, "pergunta": "Quanto é 2*1?", "escolhas": ["1", "2", "3", "4"],"resposta": "2" }'
+    ];
+    
+
+    var totalPerguntas = perguntas.length;
+    var currentQuestion = 1;
+    var JSON;
+    var pontuacao;
+
+    btnComecar.addEventListener('click', function(){
+    comecar_teste();
     });
 
+    btnTerminar.addEventListener('click', function(){
+    terminar_teste();
+    });
+
+    btnSeguinte.addEventListener('click',proximaPergunta);
+    btnAnterior.addEventListener('click',anteriorPergunta);
+
+
+    for(let i=0; i< perguntas.length; i++){
+        let obj = JSON.parse(perguntas[i]);
+        console.log(obj.pergunta);
+        var divTeste = document.getElementById('teste');
+
+        var divPergunta = document.createElement('div');
+        divPergunta.id = 'question_' + obj.id;
+        var pPergunta = document.createElement('p');
+        pPergunta.id = obj.id;
+        pPergunta.textContent = obj.pergunta;
+        pPergunta.classList.add('font-weight-bold');
+
+        divTeste.appendChild(divPergunta);
+        divPergunta.appendChild(pPergunta);
+
+        
+        if(i != 0){
+            divPergunta.classList.add("d-none");
+        }
+
+            var teste = obj.escolhas.length;
+
+        for(let j=0; j< teste; j++){
+            console.log(obj.escolhas[j]);
+            
+
+            var radioChoice = document.createElement('input');
+            radioChoice.setAttribute('type','radio');
+            radioChoice.setAttribute('name', obj.id);
+            
+            if(obj.answer == obj.escolhas[j]){
+                radioChoice.setAttribute('valor',1)
+            }
+            else{
+                radioChoice.setAttribute('valor',0);
+            }
+
+            radioChoice.id = j;
+            radioChoice.classList.add('ml-20');
+            radioChoice.classList.add('mr-10');
+            radioChoice.addEventListener('click',responder);
+
+            divPergunta.appendChild(radioChoice);
+
+            var labelChoice = document.createElement('label');
+            var labelChoice = document.createElement('label');
+            labelChoice.id = "lbl_" +  obj.id + "_" + j;
+            labelChoice.textContent = obj.escolhas[j];
+            divPergunta.appendChild(labelChoice);
+        }
+            console.log("resposta= " + obj.resposta);
+    }
+
+
+
+
     function comecar_teste(){
-        btn_comecar.classList.add('d-none');
+
+        btnComecar.classList.add('d-none');
+        document.getElementById('btn_comecar').classList.add('d-none');
+        document.getElementById('teste2').classList.add('d-none');
+        document.getElementById('teste3').classList.add('d-none');
+        document.body.style.backgroundImage = "url(fotos/fundo3.jpg)";
+        document.body.style.height = "900px";
+        
+        //aparecer os 3 botoes
+        btnAnterior.classList.remove("d-none");
+        btnSeguinte.classList.remove("d-none");
+        btnTerminar.classList.remove("d-none");
+        test_radio.classList.remove("d-none");
+
+
+        //timer
+        let divTimer = document.getElementById('timer');  
+        divTimer.classList.remove('d-none');  
+        endTime= new Date(new Date().getTime() + minute * 60000);
+        timer = setInterval(countDown, 1000);
         
     }
+
+
+
+
+    function responder(){
+        var resposta = document.getElementsByName(this.name);
+        var lbl_text;  
+        console.log("resposta");        
+       let label = document.getElementById("lbl_" + this.name + "_" + this.id);
+   
+        if (this.valor == 1){
+            pontuacao++
+        }
+
+        if (currentQuestion != totalPerguntas) {
+            btnSeguinte.classList.remove('d-none');
+        }
+        else{
+            let btnTerminar = document.getElementById('btn_terminar');
+            btnTerminar.classList.remove('d-none');
+            btnT.addEventListener('click',terminar_teste);
+            
+        }
+
+    }
+
+    function  proximaPergunta(){
+
+        document.getElementById('btn_seguinte').classList.remove('d-none');
+        let divCurrentQuestion = document.getElementById('question_' + currentQuestion);
+        divCurrentQuestion.classList.add('d-none');
+        currentQuestion++;
+
+        let nextCurrentQuestion = document.getElementById('question_' + currentQuestion);
+        nextCurrentQuestion.classList.remove('d-none');  
+        //this.classList.add('d-none');
+
+    }
+
+    function anteriorPergunta(){
+
+        document.getElementById('btn_seguinte').classList.remove('d-none');
+        let divCurrentQuestion = document.getElementById('question_' + currentQuestion);
+        divCurrentQuestion.classList.add('d-none');
+        currentQuestion--;
+
+        let nextCurrentQuestion = document.getElementById('question_' + currentQuestion);
+        nextCurrentQuestion.classList.remove('d-none'); 
+        //this.classList.add('d-none');
+
+    }
+
+   function terminar_teste(){
+       
+    btnComecar.classList.add('d-none');
+    btnSeguinte.classList.add('d-none');
+    btnTerminar.classList.add('d-none');
+    btnAnterior.classList.add('d-none');
+    
+    
+    let divTerminou = document.getElementById('terminar_teste');
+    let divAcertou = document.getElementById('acertou_teste');
+    let divErrou = document.getElementById('errou_teste');
+    let divNRRespond = document.getElementById('naorespondeu_teste')
+    let DivResultadoFinal = document.getElementById('resultado_final');
+    
+    
+    divTerminou.classList.remove('d-none');
+    divAcertou.classList.remove('d-none');
+    divErrou.classList.remove('d-none');
+    divNRRespond.classList.remove('d-none');
+    DivResultadoFinal.classList.remove('d-none');
+    divTeste.classList.add('d-none');
+    document.getElementById('timer').innerHTML = "O tempo acabou";
+    document.getElementById('acertou_teste').innerHTML = "perguntas corretas: " + pontuacao;
+    clearInterval(timer);
+
+    } 
+
+
+
+function countDown(){
+
+    let now=new Date().getTime();
+
+    let distance = endTime - now;
+
+    let minutes = Math.floor((distance % (1000 *60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((distance % (1000 *60)) / 1000);
+
+    document.getElementById('timer').innerHTML = "tempo restante: " + minutes + ":" + seconds;
+
+    if (distance < 0){
+        
+        terminar_teste();
+    }
+
+}
+
 
 </script>
 
