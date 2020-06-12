@@ -5,7 +5,7 @@
 body{
         
 	background-image:url(fotos/fundo1.png);
-    height: 100%;  
+  /*  height: 100%; */
    /* background-position: center; */
     background-repeat: no-repeat; 
     background-size: cover;
@@ -15,68 +15,76 @@ body{
 
 .texto{ /* titulo pagina inicial */
 	text-align: left;
-	font-size: 50px;
+	font-size: 313%;
 }
 
 .texto2{ /* pequeno texto pagina incial */
-	font-size: 21px;
+	font-size: 130%;
 }
 
 #terminar_teste{  /*presente ao clicar no botao temrinar teste */
-	color: blanchedalmond;
+	color: #4d2600;
 	font-size: 30px;
 	text-align: center;
 }
 
 #acertou_teste{   /*presente ao clicar no botao temrinar teste */
-	color: blanchedalmond;
-	font-size: 30px;
+	color: #4d2600;
+	font-size: 200%;
 	text-align: center;
 }
 
 #errou_teste{    /*presente ao clicar no botao temrinar teste */
-	color: blanchedalmond;
-	font-size: 20px;
+	color: #4d2600;
+	font-size: 200%;
 	text-align: center;
 }
 
 #naorespondeu_teste{   /*presente ao clicar no botao temrinar teste */
-	color: blanchedalmond;
-	font-size: 20px;
+	color: #4d2600;
+	font-size: 200%;
 	text-align: center;
 }
 
 #resultado_final{    /*presente ao clicar no botao temrinar teste */
-	color: blanchedalmond;
-	font-size: 20px;
+	color: #4d2600;
+	font-size: 200%;
 	text-align: center;
 }
 
 #teste{
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 40px;
-	color: blanchedalmond;
+	font-size: 250%;
+	color: #4d2600;
 	text-align: center;
-	margin-top: 300px;
+	margin-top: 15%;
+}
+
+
+.acertou_a_pergunta{
+    color: green;
+}
+
+.errou_a_pergunta{
+   color: red;
 }
 
 
 
 button#btn_comecar{
-	margin-left: 880px;
-	margin-top: 250px;
+	margin-left: 47%;  
+	margin-top: 13.2%;	
     box-shadow:inset 0px -50px 0px 0px #5abaf5;
 	background:linear-gradient(to bottom, #757575 5%, #8a8a8a 100%);
 	background-color:#757575;
-	border-radius:20px;
+	border-radius:5%;
 	cursor:pointer;
 	color:#1f262e;
 	font-family:Arial;
-	font-size:18px;
+	font-size:110%;
 	font-weight:bold;
-	padding:9px 33px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #0080ff;
+	padding: 0.4% 2%;
+	text-decoration: none;
 }
 
 button#btn_comecar {
@@ -86,17 +94,25 @@ button#btn_comecar {
 
 button#btn_comecar {
     position:relative;
-	top:1px;
+	top:1%;
 }
 
-.mt-10{ /* tamanho dos botoes*/
+.mt-10{ /* css dos botoes anterior seguinte e terminar */
 	font-family:Arial;
-	font-size:20px;
-	margin-left:5px;
+	font-size: 130%;
+	border: 50% solid black;
+  	margin-top: 0%;
+  	margin-bottom: 1%;
+  	margin-right: 0%;
+  	margin-left: 1%;	
+	background-color:#cca300;  /* #008CBA */
+	color: white;
+	text-align: center;
+	cursor: pointer;
+
 }
 
-
-
+/*imagem de fundo durante as respostas */
 .body2{
 	background-image: url(fotos/fundo3.jpg);
 	height: 100%;  
@@ -106,20 +122,39 @@ button#btn_comecar {
 
 }
 
-.ml-20{ 
-	margin-left: 30px;
+/*distancia da texto do radiochoice */
+.ml-20{
+	margin-left: 4%;
 }
 
 .mr-10{
-	margin-right:10px;
+	margin-right:1%;
 }
 
 .time {
     font-weight: bold;
 	text-align: right;
-	font-size: 40px;
+	font-size: 200%;
 	text-align: left;
-	color: beige;
+	color: #4d2600;	
 	
-	
+}
+
+
+/* as 3 classes para a caixa de texto */
+.submit{
+	font-size: 70%;
+	text-align: center;
+	width: 7%;
+	height: 10%;
+	color: black;
+	background-color: azure;
+}
+
+.acertou{
+	color:green;
+}
+
+.errou{
+	color:red;
 }

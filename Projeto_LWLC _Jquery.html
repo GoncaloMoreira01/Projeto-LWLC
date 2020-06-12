@@ -66,6 +66,8 @@
 
 <script>
     
+    $(document).ready(function(){
+
     var btnAnterior = document.getElementById("btn_anterior");
 
     var btnSeguinte = document.getElementById("btn_seguinte");
@@ -76,7 +78,7 @@
 
     var test_radio = document.getElementById('teste');
 
-    var minute= 3.00;
+    var minute= 3.02;
     var timer;
     var endTime;
 
@@ -96,22 +98,26 @@
     
     var totalPerguntas = perguntas.length;
     var currentQuestion = 1;
-    var JSON;
     var corretas= 0;
     var incorretas = 0;
     var resultado = 0;
     var PorResponder = 10;
 
-    btnComecar.addEventListener('click', function(){
+    $(btnComecar).click(function(){
     comecar_teste();
     });
 
-    btnTerminar.addEventListener('click', function(){
+    $(btnTerminar).click(function(){
     terminar_teste();
     });
 
-    btnSeguinte.addEventListener('click',proximaPergunta);
-    btnAnterior.addEventListener('click',anteriorPergunta);
+    $(btnSeguinte).click(function(){
+        proximaPergunta();
+    });
+
+    $(btnAnterior).click(function(){
+        anteriorPergunta();
+    });
 
 
     for(let i=0; i< perguntas.length; i++){
@@ -124,14 +130,14 @@
         var pPergunta = document.createElement('p');
         pPergunta.id = obj.id;
         pPergunta.textContent = obj.pergunta;
-        pPergunta.classList.add('font-weight-bold');
+        $(pPergunta).addClass('font-weight-bold');
 
-        divTeste.appendChild(divPergunta);
-        divPergunta.appendChild(pPergunta);
+        $(divTeste).append(divPergunta);
+        $(divPergunta).append(pPergunta);
 
         
         if(i != 0){
-            divPergunta.classList.add("d-none");
+            $(divPergunta).addClass("d-none");
         }
 
             var teste = obj.escolhas.length;
@@ -141,7 +147,7 @@
             
             if(obj.id < 10){
                 
-                var radioChoice = document.createElement('input');
+            var radioChoice = document.createElement('input');
             radioChoice.setAttribute('type','radio');
             radioChoice.setAttribute('name', obj.id);
             
@@ -153,17 +159,22 @@
             }
 
             radioChoice.id = j;
-            radioChoice.classList.add('ml-20');
-            radioChoice.classList.add('mr-10');
-            radioChoice.addEventListener('click',responder);
+            $(radioChoice).addClass('ml-20');
+            $(radioChoice).addClass('mr-10');
 
-            divPergunta.appendChild(radioChoice);
+            //radioChoice.addEventListener('click',responder); 
+           
+            $(radioChoice).click(function(){                                   
+               responder();
+            });
+
+            divPergunta.appendChild(radioChoice);   
 
             var labelChoice = document.createElement('label');
             var labelChoice = document.createElement('label');
             labelChoice.id = "lbl_" +  obj.id + "_" + j;
             labelChoice.textContent = obj.escolhas[j];
-            divPergunta.appendChild(labelChoice);
+            $(divPergunta).append(labelChoice);
             } 
             
             else if(obj.id < 11){
@@ -171,89 +182,62 @@
             var radioChoice = document.createElement('input');
             radioChoice.setAttribute('type','text');
             radioChoice.setAttribute('name', obj.id);
-            radioChoice.classList.add('input');
+            $(radioChoice).addClass('input');
             
             
 
             radioChoice.id = j;
             radioChoice.innerHTML = obj.escolhas[j];
-            radioChoice.classList.add('ml-20');
-            radioChoice.classList.add('mr-10');
+            $(radioChoice).addClass('ml-20');
+            $(radioChoice).addClass('mr-10');
 
 
             var botaoSubmeter = document.createElement("button");
             botaoSubmeter.textContent = "submeter";
-            botaoSubmeter.classList.add('submit');
-            botaoSubmeter.addEventListener('click',caixaTexto);
+            $(botaoSubmeter).addClass('submit');
+
+            $(botaoSubmeter).click(function(){
+                caixaTexto();
+            });
 
 
-            divPergunta.appendChild(radioChoice);
-            divPergunta.appendChild(botaoSubmeter);
+            $(divPergunta).append(radioChoice);
+            $(divPergunta).append(botaoSubmeter);
 
             var labelChoice = document.createElement('label');
             labelChoice.id = "lbl_" +  obj.id + "_" + j;
             labelChoice.textContent = obj.escolhas[j];
-            divPergunta.appendChild(labelChoice);
+            $(divPergunta).append(labelChoice);
             }
         }   
     }
 
 
 
-
-    function caixaTexto(){
-        
-        let obj = JSON.parse(perguntas[currentQuestion-1]);
-        console.log("texto");
-        var resposta = document.getElementsByName(currentQuestion);
-        var lbl_text;
-        console.log("boas");
-
-        for(let i = 0; i < resposta.length; i++){
-            resposta[i].disabled = true;
-            console.log(resposta.length);
-        }
-
-        let label = document.getElementById("lbl_" + this.name + "_" + this.id);
-
-        
-        if ($(resposta).val() == obj.resposta){
-            console.log("certo");
-            corretas++;
-            PorResponder--;
-            botaoSubmeter.classList.add('acertou');
-        }
-
-        else{
-            console.log("errado");
-            incorretas++;
-            PorResponder--;
-            botaoSubmeter.classList.add('errou');
-        }
-    }    
-
-
-
     function comecar_teste(){
         
-        btnComecar.classList.add('d-none');
-        document.getElementById('btn_comecar').classList.add('d-none');
-        document.getElementById('teste2').classList.add('d-none');
-        document.getElementById('teste3').classList.add('d-none');
+        $(btnComecar).addClass('d-none');
+        $("#btn_comecar").addClass('d-none');
+        $("#teste2").addClass('d-none');
+        $("#teste3").addClass('d-none');
         document.body.style.backgroundImage = "url(fotos/fundo2.png)";
         document.body.style.height = "100%";
         
         //aparecer os 2 botoes
-        btnSeguinte.classList.remove("d-none");
-        btnTerminar.classList.remove("d-none");
-        test_radio.classList.remove("d-none");
+        $(btnSeguinte).removeClass("d-none");
+        $(btnTerminar).removeClass("d-none");
+        $(test_radio).removeClass("d-none");
 
 
         //timer
         let divTimer = document.getElementById('timer');  
-        divTimer.classList.remove('d-none');  
+        $(divTimer).removeClass('d-none');  
         endTime= new Date(new Date().getTime() + minute * 60000);
         timer = setInterval(countDown, 1000);
+
+        if(currentQuestion==1){
+            alert("Tens exatamente 3 minutos para fazer este teste. Para passares certifica-te que acertas pelo menos 5 das 10 perguntas. Boa sorte!!");
+        }
         
     }
 
@@ -297,54 +281,94 @@
 
     }
 
+
+
     function  proximaPergunta(){
 
-        document.getElementById('btn_seguinte').classList.remove('d-none');
+        $("#btn_seguinte").removeClass('d-none');
         let divCurrentQuestion = document.getElementById('question_' + currentQuestion);
-        divCurrentQuestion.classList.add('d-none');
+        $(divCurrentQuestion).addClass('d-none');
         currentQuestion++;
 
         let nextCurrentQuestion = document.getElementById('question_' + currentQuestion);
-        nextCurrentQuestion.classList.remove('d-none');  
+        $(nextCurrentQuestion).removeClass('d-none');  
         //this.classList.add('d-none');
 
         if(currentQuestion == totalPerguntas){
-            document.getElementById('btn_seguinte').classList.add('d-none');
+            $("#btn_seguinte").addClass('d-none');
             alert("A próxima pergunta é a última do teste. Verifica se respondeste a todas as perguntas e de seguida clica em Terminar teste");
         }
 
         if(currentQuestion>1){
-            btnAnterior.classList.remove('d-none');
+            $(btnAnterior).removeClass('d-none');
         }
 
     }
 
+
+
     function anteriorPergunta(){
 
-        document.getElementById('btn_seguinte').classList.remove('d-none');
+        $("#btn_seguinte").removeClass('d-none');
         let divCurrentQuestion = document.getElementById('question_' + currentQuestion);
-        divCurrentQuestion.classList.add('d-none');
+        $(divCurrentQuestion).addClass('d-none');
         currentQuestion--;
 
         let nextCurrentQuestion = document.getElementById('question_' + currentQuestion);
-        nextCurrentQuestion.classList.remove('d-none'); 
+        $(nextCurrentQuestion).removeClass('d-none'); 
         //this.classList.add('d-none');
 
         if(currentQuestion < totalPerguntas){
-            document.getElementById('btn_seguinte').classList.remove('d-none');
+            $("#btn_seguinte").removeClass('d-none');
         }
 
         if(currentQuestion==1){
-            btnAnterior.classList.add('d-none');
+            $(btnAnterior).addClass('d-none');
         } 
  
     }
 
+
+
+    function caixaTexto(){
+        
+        let obj = JSON.parse(perguntas[currentQuestion-1]);
+        console.log("texto");
+        var resposta = document.getElementsByName(currentQuestion);
+        var lbl_text;
+        console.log("boas");
+
+        for(let i = 0; i < resposta.length; i++){
+            resposta[i].disabled = true;
+            console.log(resposta.length);
+        }
+
+        let label = document.getElementById("lbl_" + this.name + "_" + this.id);
+
+        
+        if ($(resposta).val() == obj.resposta){
+           
+            corretas++;
+            PorResponder--;
+            $(botaoSubmeter).addClass('acertou');
+        }
+
+        else{
+            
+            incorretas++;
+            PorResponder--;
+            $(botaoSubmeter).addClass('errou');
+        }
+    }    
+
+
+
+
    function terminar_teste(){
-    btnComecar.classList.add('d-none');
-    btnSeguinte.classList.add('d-none');
-    btnTerminar.classList.add('d-none');
-    btnAnterior.classList.add('d-none');
+    $(btnComecar).addClass('d-none');
+    $(btnSeguinte).addClass('d-none');
+    $(btnTerminar).addClass('d-none');
+    $(btnAnterior).addClass('d-none');
     
     
     let divTerminou = document.getElementById('terminar_teste');
@@ -354,26 +378,25 @@
     let DivResultadoFinal = document.getElementById('resultado_final');
     
     
-    divTerminou.classList.remove('d-none');
-    divAcertou.classList.remove('d-none');
-    divErrou.classList.remove('d-none');
-    divNRRespond.classList.remove('d-none');
-    DivResultadoFinal.classList.remove('d-none');
-    divTeste.classList.add('d-none');
-    document.getElementById('timer').innerHTML = "O tempo acabou";
-    document.getElementById('acertou_teste').innerHTML = "perguntas corretas: " + corretas;
-    document.getElementById('errou_teste').innerHTML = "perguntas erradas: " + incorretas;
-    document.getElementById('naorespondeu_teste').innerHTML ="perguntas por responder: " + PorResponder;
+    $(divTerminou).removeClass('d-none');
+    $(divAcertou).removeClass('d-none');
+    $(divErrou).removeClass('d-none');
+    $(divNRRespond).removeClass('d-none');
+    $(DivResultadoFinal).removeClass('d-none');
+    $(divTeste).addClass('d-none');
+    $("#timer").html("O tempo acabou");
+    $("#acertou_teste").html("perguntas corretas: " + corretas);
+    $("#errou_teste").html("perguntas erradas: " + incorretas);
+    $("#naorespondeu_teste").html("perguntas por responder: " + PorResponder);
     clearInterval(timer);
 
-    //resultado = corretas - incorretas;
     var meio = totalPerguntas /2;
     
     if(corretas >= meio){
-        document.getElementById('resultado_final').innerHTML = "Resultado: Parabéns! Passaste á cadeira";
+        $("#resultado_final").html("Resultado: Parabéns! Passaste á cadeira");
         }
     else{
-        document.getElementById('resultado_final').innerHTML = "Resultado: Não conseguiste passar desta vez, aplica-te mais para a próxima";
+        $("#resultado_final").html("Resultado: Não conseguiste passar desta vez, aplica-te mais para a próxima");
         }
 
     } 
@@ -396,7 +419,7 @@ function countDown(){
         terminar_teste();
     }
 }
-
+});
 </script>
 
 </html>
